@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink: #151717;
+  --color-ink-soft: #383a3a;
+  --color-muted: #b3b3b3;
+  --color-paper: #ededed;
+  --color-paper-2: #f1f1f1;
+  --color-accent: #d92424;
+  --font-primary: var(--font-instrument-sans), "Instrument Sans Fallback", Arial, sans-serif;
+  --font-secondary: var(--font-lora), "Lora Fallback", "Times New Roman", serif;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1920px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ------------------------------------------------------------------
+   Fluid root sizing — the whole design is authored in rem and scales
+   with the viewport. 375px base on mobile, 1920px base on desktop,
+   frozen at 10px once past 1920px.
+------------------------------------------------------------------- */
+@layer base {
+  html {
+    font-size: 2.6666666667vw;
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (min-width: 768px) {
+    html { font-size: 0.5208333333vw; }
+  }
+  @media (min-width: 1920px) {
+    html { font-size: 10px; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --side-gap: 2.5rem;
+  --full-width: calc(100vw + var(--scrollbar-width, 0px));
+}
+@media (min-width: 768px) {
+  :root { --side-gap: 10rem; }
+}
+
+/* These belong in the base layer — unlayered rules outrank every Tailwind
+   utility regardless of specificity, which would make `text-white` on a
+   link lose to `color: inherit`. */
+@layer base {
+  * { box-sizing: border-box; outline-color: #151717; }
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    font-family: var(--font-primary);
+    color: #151717;
+    background-color: #fff;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; }
+  img { max-width: 100%; }
+}
+
+/* Shared layout container (matches the original: 1920 cap + 10rem gutters) */
+.container {
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding-inline: var(--side-gap);
+}
+
+/* The two-tone copy treatment used across every section: lead clause in
+   ink, remainder in muted grey. */
+.em { color: #b3b3b3; }
+
+/* Words are split for the mask-reveal; keep them from flashing pre-hydration */
+.will-reveal { visibility: hidden; }
+.will-reveal.is-ready { visibility: visible; }
+
+@media (prefers-reduced-motion: reduce) {
+  .will-reveal { visibility: visible !important; }
+}
+
+/* Five-star strip: one star per 1.6rem (2rem on desktop) of the 8rem/10rem
+   track. The tile size has to move with the width or a sixth star shows. */
+.stars {
+  background-image: url(/star.svg);
+  background-repeat: repeat-x;
+  background-size: 1.6rem 1.6rem;
+}
+@media (min-width: 768px) {
+  .stars { background-size: 2rem 2rem; }
 }
