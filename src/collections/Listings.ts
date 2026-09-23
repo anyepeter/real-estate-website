@@ -27,6 +27,17 @@ export const Listings: CollectionConfig = {
   },
   versions: {
     drafts: true,
+    /**
+     * Cap the version history. Payload writes a full row copy on every save,
+     * so an uncapped listing that gets priced, re-photographed and re-worded
+     * over a year quietly becomes hundreds of rows. Nothing prunes that on
+     * its own — Neon never deletes data, which is correct for a database and
+     * unhelpful for a table that only grows.
+     *
+     * 20 keeps a useful audit trail (who dropped the price, and when) without
+     * the table outliving its usefulness.
+     */
+    maxPerDoc: 20,
   },
   fields: [
     {
