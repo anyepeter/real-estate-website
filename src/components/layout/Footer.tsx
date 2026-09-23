@@ -6,6 +6,7 @@ import { LogoMark } from "@/components/Logo";
 import { ArrowRight } from "@/components/ui/icons";
 import RollingText from "./RollingText";
 import { footer } from "@/lib/content";
+import { brand, regulatoryLine } from "@/lib/brand";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -113,8 +114,15 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="text-[hsla(0,0%,100%,0.4)]">FIND Real Estate</li>
-              <li className="text-[hsla(0,0%,100%,0.4)]">Copyright &copy; {new Date().getFullYear()}</li>
+              {/* RERA requires the brokerage name and ORN on every advert —
+                  the website included, not just the listing pages. */}
+              <li className="text-[hsla(0,0%,100%,0.4)]">{regulatoryLine}</li>
+              <li className="text-[hsla(0,0%,100%,0.4)]">
+                Trade licence {brand.legal.tradeLicence}
+              </li>
+              <li className="text-[hsla(0,0%,100%,0.4)]">
+                Copyright &copy; {new Date().getFullYear()} {brand.fullName}
+              </li>
             </ul>
           </div>
         </div>

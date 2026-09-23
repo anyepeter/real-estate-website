@@ -1,98 +1,122 @@
 /**
  * All landing-page copy in one place. `lead`/`rest` pairs drive the
  * two-tone treatment: the lead clause sits in ink, the rest in grey.
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ *  PLACEHOLDER CONTENT. Everything here is provisional and written for a
+ *  Dubai brokerage. Two rules it already obeys, which must survive editing:
+ *
+ *  1. No service is advertised that the trade licence does not cover.
+ *     Brokerage only — buying, selling, leasing. Property management and
+ *     mortgage advisory are deliberately absent; advertising an unlicensed
+ *     activity is a RERA problem, not a copy preference.
+ *
+ *  2. No fabricated social proof. The testimonials below are marked
+ *     placeholders, not invented clients. Replace with real reviews or
+ *     remove the section.
+ *
+ *  The image paths still point at the cloned site's photography. Every file
+ *  under public/images/ has to be replaced before this goes anywhere public.
+ * ───────────────────────────────────────────────────────────────────────────
  */
 
+import { brand } from "./brand";
+
 export const nav = [
-  { label: "Search", href: "/search" },
-  { label: "Agents", href: "/agents" },
-  { label: "Join", href: "/join", items: ["Why FIND", "Agent Benefits", "Apply"] },
-  { label: "Paperwork", href: "/paperwork", items: ["Forms", "Disclosures", "Contracts"] },
-  { label: "Resources", href: "/resources", items: ["Blog", "Market Reports", "Guides"] },
-  { label: "About", href: "/about", items: ["Our Story", "Leadership", "Careers"] },
+  { label: "Buy", href: "/buy" },
+  { label: "Rent", href: "/rent" },
+  { label: "Sell", href: "/sell" },
+  {
+    label: "Commercial",
+    href: "/commercial",
+    items: ["Offices", "Retail", "Warehouses", "Coworking"],
+  },
+  {
+    label: "Areas",
+    href: "/areas",
+    items: ["Dubai Marina", "Business Bay", "Downtown Dubai", "JVC"],
+  },
+  {
+    label: "Insights",
+    href: "/insights",
+    items: ["Market Data", "Guides", "Blog"],
+  },
 ];
 
 export const hero = {
-  title: "Find What Moves You",
-  lead: "Expert agents. Real guidance.",
-  rest: "A clear path to find what’s next.",
-  cta: { label: "Find Properties", href: "/search" },
+  title: "Find Your Place in Dubai",
+  lead: "Licensed brokerage. Verified listings.",
+  rest: "Every property permitted, every price current.",
+  cta: { label: "Browse Properties", href: "/buy" },
 };
 
 export const whyUs = {
-  label: "Why FIND",
-  lead: "Your life’s changing. Don’t just find a place — find what’s next.",
-  rest: "We help you move forward with clarity, confidence, and the right agent by your side.",
+  label: `Why ${brand.name}`,
+  lead: "Dubai moves fast. Your search shouldn’t feel like guesswork.",
+  rest: "We work one property at a time, with current prices and real availability — not listings that went weeks ago.",
 };
 
 export const arrows = {
   titleLead: "This isn’t just",
-  titleRest: "about real estate.",
+  titleRest: "about property.",
   images: [
-    { src: "/images/arrow-1.jpg", alt: "Agent walking a city block" },
-    { src: "/images/arrow-2.jpg", alt: "Sunlit bedroom with skyline view" },
-    { src: "/images/arrow-3.jpg", alt: "Dining area in a modern apartment" },
-    { src: "/images/arrow-4.jpg", alt: "Agent outside a downtown building" },
+    { src: "/images/arrow-1.jpg", alt: "Residential towers along a Dubai waterfront" },
+    { src: "/images/arrow-2.jpg", alt: "Sunlit bedroom with a skyline view" },
+    { src: "/images/arrow-3.jpg", alt: "Dining area in a modern Dubai apartment" },
+    { src: "/images/arrow-4.jpg", alt: "Agent outside a Business Bay tower" },
   ],
-  lead: "It’s about identity. Progress. Getting unstuck. You’re not just looking for a place.",
-  rest: "You’re looking for alignment. That’s what we help you find.",
+  lead: "It’s a visa, a school run, a commute, a first home in a new country.",
+  rest: "Getting it right matters more here than almost anywhere. That’s the part we take seriously.",
 };
 
 export const rewired = {
-  titleLead: "Real Estate,",
-  titleRest: "Rewired.",
-  cta: { label: "Start Your Search", href: "/search" },
+  titleLead: "Dubai Property,",
+  titleRest: "Without the Noise.",
+  cta: { label: "Start Your Search", href: "/buy" },
   label: "Steps:",
   steps: [
-    { lead: "Talk to a Real Human.", rest: "We match you with an expert who actually listens." },
-    { lead: "Get Clarity.", rest: "We define what you really need, not just what’s available." },
-    { lead: "Move Forward.", rest: "We find what fits — and make it happen." },
+    { lead: "Tell us what you need.", rest: "Budget, area, timing — and what actually matters to you." },
+    { lead: "See what’s genuinely available.", rest: "Permitted listings, current prices, no bait." },
+    { lead: "Move.", rest: "We handle the paperwork, Ejari and handover." },
   ],
 };
 
+/**
+ * Repurposed from the clone's agent-recruitment slot into the inbound
+ * mandate funnel — the actual acquisition channel for a brokerage this size.
+ */
 export const forAgents = {
-  label: "For Agents",
-  titleLead: "Don’t Rent Your Career.",
-  titleRest: "Own It.",
-  lead: "At FIND, our agents don’t just work for the brand—they own a part of it.",
-  rest:
-    "We give top performers real equity, so they’re invested in more than just your transaction—they’re invested in your outcome. Agents are certified, supported, and equipped to deliver five-star service—because their success is tied to yours. You’re not just here to close deals — you’re building a career, a life, a legacy. We help agents find the company that gives them the support, tools, and leadership to thrive.",
-  cta: { label: "Join The Movement", href: "/join" },
+  label: "For Owners",
+  titleLead: "Have a Property",
+  titleRest: "to List?",
+  lead: "Free valuation, based on what comparable units in your building actually transacted for.",
+  rest: "We handle the Form A, the DLD advertising permit and the photography, and your property goes live the same week. You get one point of contact for the whole process — not a call centre, not a rotating cast of agents.",
+  cta: { label: "Request a Valuation", href: "/sell" },
 };
 
 export const testimonials = {
   titleLead: "Don’t Take",
   titleRest: "Our Word for It.",
   image: "/images/testimonials.jpg",
+  /**
+   * PLACEHOLDER — these are not real reviews and must not ship as such.
+   * Replace with genuine client reviews (which also feed AggregateRating
+   * structured data) or delete the section from app/page.tsx.
+   */
   items: [
     {
-      quote:
-        "\"Michael was a great realtor. Such a hard worker, dedicated to helping us find the perfect neighborhood, price point and home. He's a workaholic so he was available morning, noon and night. Tireless and dedicated. Would recommend him 100%!\"",
-      author: "Bernadette Hogan",
+      quote: "\"Placeholder — a real client review goes here before launch.\"",
+      author: "Client name",
       rating: 5,
     },
     {
-      quote:
-        "\"Working with FIND took every bit of guesswork out of the process. They listened first, then brought us options that actually matched how we wanted to live. We closed faster than we thought possible.\"",
-      author: "Tyleen",
+      quote: "\"Placeholder — a real client review goes here before launch.\"",
+      author: "Client name",
       rating: 5,
     },
     {
-      quote:
-        "\"I had been searching on my own for months with nothing to show for it. One conversation with my FIND agent and suddenly I was seeing places that fit. Genuinely the easiest part of my move.\"",
-      author: "Johanna Nieto",
-      rating: 5,
-    },
-    {
-      quote:
-        "\"Straightforward, responsive, and honest about what my budget could actually get me. No pressure, no games — just real guidance from someone who knew the market cold.\"",
-      author: "mattmpowers",
-      rating: 5,
-    },
-    {
-      quote:
-        "\"They treated a first-time purchase like it mattered. Every question got a real answer, and I never once felt like just another transaction on someone’s list.\"",
-      author: "Giavridis Theodore",
+      quote: "\"Placeholder — a real client review goes here before launch.\"",
+      author: "Client name",
       rating: 5,
     },
   ],
@@ -100,128 +124,132 @@ export const testimonials = {
 
 export const services = {
   label: "Services",
-  titleLead: "How FIND",
+  titleLead: `How ${brand.name}`,
   titleRest: "Can Help You",
   items: [
     {
       name: "Buy",
       image: "/images/service-buy.jpg",
-      text: "Buy smarter with expert agents backed by mortgage, legal, and appraisal pros—dialed in to get you the best deal, fast. We’ve done this over 10,000 times, and we know what wins.",
+      text: "Ready and off-plan across Dubai. We show you what the building actually transacted for before you make an offer, not just what it’s listed at.",
       href: "/buy",
     },
     {
       name: "Sell",
       image: "/images/service-sell.jpg",
-      text: "Sell fast, sell high. Your listing gets pro staging, strategic pricing, constant open houses, and agents who never stop working until the right buyer signs.",
+      text: "Priced against real DLD transaction data, permitted properly, photographed well, and marketed where buyers are actually looking.",
       href: "/sell",
     },
     {
       name: "Rent",
       image: "/images/service-rent.jpg",
-      text: "Access hidden rentals before they hit the market through agents who know every landlord in town. With decades of NYC experience, we unlock the best deals you won’t find online.",
+      text: "Long and short term, furnished and unfurnished. Current availability only — if it’s on the site, it’s still on the market.",
       href: "/rent",
     },
   ],
-  briefLead: "Our certified agents guide you through every stage of real estate",
-  briefRest: "with expert knowledge and reliable support.",
-  cta: { label: "Get Started with FIND", href: "/contact" },
+  briefLead: "A licensed Dubai brokerage covering sales and leasing",
+  briefRest: "across residential, commercial and workspace.",
+  cta: { label: "Talk to Us", href: "/contact" },
 };
 
 export const features = {
-  titleLead: "Support Beyond",
-  titleRest: "Buying and Selling",
-  lead: "The real estate market never stands still — and neither do we.",
-  rest: "Our experts offer continued support beyond the sale, helping you maximize your investment.",
-  cta: { label: "Discover Our Services", href: "/services" },
+  titleLead: "Beyond the",
+  titleRest: "Transaction",
+  lead: "The Dubai market never stands still — and the public data is better here than almost anywhere.",
+  rest: "We use it, and we publish it, so you can see the market the way we do.",
+  cta: { label: "Explore Insights", href: "/insights" },
   items: [
     {
-      title: "Mortgage Services",
-      text: "Helping you secure your dream home with flexible mortgage options.",
-      image: "/images/feature-mortgage.jpg",
-      href: "/services/mortgage",
-    },
-    {
-      title: "Property Management",
-      text: "Let us handle the details so you can enjoy the rewards.",
-      image: "/images/feature-property.jpg",
-      href: "/services/property-management",
-    },
-    {
-      title: "Construction and Real Estate Development",
-      text: "Guiding you through the intricacies of building and developing properties with expert insight and support.",
+      title: "Off-Plan & New Projects",
+      text: "Every DLD-registered launch, with registration status and construction progress from the official project registry.",
       image: "/images/feature-development.jpg",
-      href: "/services/development",
+      href: "/off-plan",
+    },
+    {
+      title: "Commercial & Workspace",
+      text: "Offices, retail, warehouses and coworking — the corner of the market the big portals barely cover.",
+      image: "/images/feature-property.jpg",
+      href: "/commercial",
+    },
+    {
+      title: "Market Data & Valuations",
+      text: "Recorded sale and rent prices by area and building, straight from Dubai Land Department open data.",
+      image: "/images/feature-mortgage.jpg",
+      href: "/insights",
     },
   ],
 };
 
 export const latestPosts = {
-  titleLead: "Blog &",
-  titleRest: "Resources",
-  text: "See how we’ve helped clients achieve their real estate dreams, one successful move at a time.",
-  cta: { label: "Visit Our Blog", href: "/blog" },
+  titleLead: "Guides &",
+  titleRest: "Market Data",
+  text: "The things people actually ask us, written down properly — plus what the transaction record says about each area.",
+  cta: { label: "Read the Guides", href: "/insights" },
+  /** PLACEHOLDER — titles reflect the planned editorial, none are written yet. */
   items: [
     {
-      date: "2026-09-02",
-      title:
-        "FIND Real Estate Featured in Redfin: What It Really Costs to Live in Harry Styles’ Neighborhood",
-      text: "A look at the housing prices, everyday expenses, and lifestyle costs in Harry Styles’ neighborhood.",
+      date: "2026-09-01",
+      title: "Renting in Dubai as a New Expat: The Whole Process, Start to Finish",
+      text: "Ejari, the deposit, the cheques, the agent fee and the handover — what each step costs and when it happens.",
       image: "/images/feature-property.jpg",
-      href: "/blog/redfin-harry-styles-neighborhood",
+      href: "/insights/renting-in-dubai-guide",
     },
     {
-      date: "2026-04-13",
-      title: "Q1 2026 NYC Market Report",
-      text: "Q1 2026 saw strong rental demand, active sales, and shifting pricing across NYC. Here’s what it means heading into the spring market.",
+      date: "2026-08-15",
+      title: "What a 2-Bed in Business Bay Actually Rents For",
+      text: "Recorded transactions by tower, not asking prices — and how far the gap between the two really goes.",
       image: "/images/feature-mortgage.jpg",
-      href: "/blog/q1-2026-nyc-market-report",
+      href: "/insights/business-bay-2-bed-rents",
     },
     {
-      date: "2026-04-01",
-      title: "Philly Real Estate: A Winter Chill or a Spring Opportunity?",
-      text: "Record-low listings and steady price growth define a unique February for the Philadelphia Metro.",
+      date: "2026-08-02",
+      title: "Buying Off-Plan in Dubai: How to Check a Project Before You Commit",
+      text: "Escrow, DLD project registration and completion percentage — all public, all checkable in ten minutes.",
       image: "/images/feature-development.jpg",
-      href: "/blog/philly-winter-chill-spring-opportunity",
+      href: "/insights/off-plan-due-diligence",
     },
   ],
 };
 
 export const outro = {
-  lead: "Find You.",
-  rest: "We’ll Help You Get There.",
-  cta: { label: "Let’s Get Started", href: "/contact" },
+  lead: "Know What You’re Looking For?",
+  rest: "Let’s Go Find It.",
+  cta: { label: "Get Started", href: "/contact" },
   image: "/images/outro-bg.jpg",
 };
 
 export const footer = {
-  newsletterTitle: "Subscribe to our Newsletter!",
-  placeholder: "Enter address",
+  newsletterTitle: "Market updates, once a month.",
+  placeholder: "Enter your email",
   contacts: [
-    { label: "Head Office", value: "5 West 37th Street, 12th Floor,\nNew York, NY 10018" },
-    { label: "Email Us", value: "hello@findrealestate.com", href: "mailto:hello@findrealestate.com" },
-    { label: "Call Us", value: "+1 212 994 9965", href: "tel:+12129949965" },
+    {
+      label: "Office",
+      value: `${brand.contact.address.line1},\n${brand.contact.address.line2}, ${brand.contact.address.city}`,
+    },
+    { label: "Email Us", value: brand.contact.email, href: `mailto:${brand.contact.email}` },
+    {
+      label: "Call Us",
+      value: brand.contact.phone,
+      href: `tel:${brand.contact.phone.replace(/\s/g, "")}`,
+    },
   ],
   nav: [
-    { label: "Search", href: "/search" },
-    { label: "Agents", href: "/agents" },
-    { label: "Join", href: "/join" },
-    { label: "About Us", href: "/about" },
-    { label: "Agent Portal", href: "/portal" },
+    { label: "Buy", href: "/buy" },
+    { label: "Rent", href: "/rent" },
+    { label: "Sell", href: "/sell" },
+    { label: "Commercial", href: "/commercial" },
+    { label: "Insights", href: "/insights" },
   ],
+  /** PLACEHOLDER — accounts not created yet. See the roadmap: these need to
+      exist and be posting manually from week 1 so the Instagram API has
+      impression quota by the time app review clears. */
   socials: [
-    { label: "Facebook", href: "https://facebook.com" },
     { label: "Instagram", href: "https://instagram.com" },
-    { label: "Youtube", href: "https://youtube.com" },
-    { label: "Linkedin", href: "https://linkedin.com" },
+    { label: "Facebook", href: "https://facebook.com" },
+    { label: "TikTok", href: "https://tiktok.com" },
+    { label: "LinkedIn", href: "https://linkedin.com" },
   ],
-  sublinks: [
-    "Terms",
-    "Privacy policy",
-    "Fair Housing Notice",
-    "Reasonable Accommodation Notice",
-    "Operating Procedure",
-    "Press",
-    "Housing Choice Vouchers Welcome",
-    "Se Aceptan Vales de Elección de Vivienda",
-  ],
+  /** UAE-appropriate. The clone shipped US federal and New York State
+      housing notices — Fair Housing, Housing Choice Vouchers, Reasonable
+      Accommodation — which mean nothing here and read as an unedited template. */
+  sublinks: ["Terms", "Privacy Policy", "Cookie Policy", "RERA Compliance"],
 };

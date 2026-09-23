@@ -21,7 +21,7 @@ export default function ForAgents() {
               >
                 <Image
                   src="/images/agents-small.jpg"
-                  alt="FIND agent outside a glass tower"
+                  alt="Agent outside a Dubai residential tower"
                   fill
                   sizes="36rem"
                   className="object-cover"

@@ -1,6 +1,25 @@
 import type { SVGProps } from "react";
 
-/** Compact FIND wordmark — header, footer, burger menu. */
+/**
+ * ───────────────────────────────────────────────────────────────────────────
+ *  ⚠ BLOCKING BEFORE ANY PUBLIC DEPLOY — this is not our artwork.
+ * ───────────────────────────────────────────────────────────────────────────
+ *
+ *  The paths below spell "FIND" and are lifted from findrealestate.com, a
+ *  live New York brokerage. Every string in the codebase now reads from
+ *  lib/brand.ts, but a wordmark is geometry, not text, so it cannot be
+ *  swapped by renaming a constant.
+ *
+ *  Replace before this is deployed anywhere public:
+ *    · the paths in LogoMark and LogoType below
+ *    · public/logotype.svg — the same artwork, used as a CSS mask in the hero
+ *
+ *  Both viewBoxes (975×280 compact, 977×423 full) are load-bearing: Hero.tsx
+ *  sizes the mask against them, so keep the new artwork on the same canvas
+ *  or adjust the mask-size values in Hero.tsx to match.
+ */
+
+/** Compact wordmark — header, footer, burger menu. */
 export function LogoMark(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 975 280" fill="currentColor" xmlns="http://www.w3.org/2000/svg" {...props}>

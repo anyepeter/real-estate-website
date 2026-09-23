@@ -9,6 +9,7 @@ import { ButtonLink } from "@/components/ui/button";
 import RollingText from "./RollingText";
 import BurgerMenu from "./BurgerMenu";
 import { nav } from "@/lib/content";
+import { brand } from "@/lib/brand";
 
 export default function Header() {
   const [solid, setSolid] = useState(false);
@@ -41,7 +42,7 @@ export default function Header() {
       >
         <div className="container">
           <div className="relative z-50 grid min-h-[8.4rem] grid-cols-[1fr_auto] items-center text-[#151717] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem] md:py-[1rem]">
-            <Link href="/" aria-label="FIND Real Estate — home" className="flex items-center" prefetch={false}>
+            <Link href="/" aria-label={`${brand.fullName} — home`} className="flex items-center" prefetch={false}>
               <LogoMark className="h-[2.6rem] w-[9.1rem]" />
             </Link>
 
