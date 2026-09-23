@@ -102,20 +102,26 @@ export const testimonials = {
    * PLACEHOLDER — these are not real reviews and must not ship as such.
    * Replace with genuine client reviews (which also feed AggregateRating
    * structured data) or delete the section from app/page.tsx.
+   *
+   * `id` is the React key. Don't key on author or quote: real reviews
+   * repeat both, and duplicates silently break list reconciliation.
    */
   items: [
     {
+      id: "placeholder-1",
       quote: "\"Placeholder — a real client review goes here before launch.\"",
       author: "Client name",
       rating: 5,
     },
     {
-      quote: "\"Placeholder — a real client review goes here before launch.\"",
+      id: "placeholder-2",
+      quote: "\"Placeholder — a second review. Replace or remove the section.\"",
       author: "Client name",
       rating: 5,
     },
     {
-      quote: "\"Placeholder — a real client review goes here before launch.\"",
+      id: "placeholder-3",
+      quote: "\"Placeholder — a third review. Replace or remove the section.\"",
       author: "Client name",
       rating: 5,
     },

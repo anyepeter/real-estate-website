@@ -47,7 +47,7 @@ export default function Testimonials() {
               <div className="relative z-[4] flex gap-[1.3rem]">
                 {testimonials.items.map((t, i) => (
                   <button
-                    key={t.author}
+                    key={t.id}
                     type="button"
                     aria-label={`Testimonial ${i + 1}`}
                     onClick={() => swiper?.slideTo(i)}
@@ -76,7 +76,7 @@ export default function Testimonials() {
                 className="!pt-[10rem]"
               >
                 {testimonials.items.map((t) => (
-                  <SwiperSlide key={t.author}>
+                  <SwiperSlide key={t.id}>
                     <blockquote className="font-secondary text-[2.2rem] leading-[115%] tracking-[-0.01em] md:text-[3.2rem] md:tracking-[-0.02em]">
                       {t.quote}
                     </blockquote>
