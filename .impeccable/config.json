@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 3.56, .64, 1)",
+        "createdAt": "2026-09-23T15:49:04.772Z",
+        "reason": "Claude: 2% scale-x overshoot on a pill hover only. Amplitude is ~1.026 peak, too small to read as bounce - it lands as a spring, not a cartoon. Inherited from the reference design and kept deliberately. Not user confirmed."
+      }
+    ]
+  }
+}
