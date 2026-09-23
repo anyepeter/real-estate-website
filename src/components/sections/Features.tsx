@@ -60,7 +60,7 @@ export default function Features() {
               <h3 className="relative max-w-[80%] text-[3rem] font-medium leading-[115%] tracking-[-0.01em] md:max-w-[34.5rem] md:text-balance md:text-[4.4rem] md:tracking-[-0.02em]">
                 {item.title}
               </h3>
-              <p className="relative text-[1.6rem] leading-[150%] md:max-w-[34.5rem] md:text-[2rem] [@media(min-width:768px)and(pointer:fine)]:opacity-0 [@media(min-width:768px)and(pointer:fine)]:transition-opacity [@media(min-width:768px)and(pointer:fine)]:duration-[400ms] [@media(min-width:768px)and(pointer:fine)]:group-hover:opacity-100">
+              <p className="relative text-[1.6rem] leading-[150%] md:max-w-[34.5rem] md:text-[2rem] [@media(min-width:768px)_and_(pointer:fine)]:opacity-0 [@media(min-width:768px)_and_(pointer:fine)]:transition-opacity [@media(min-width:768px)_and_(pointer:fine)]:duration-[400ms] [@media(min-width:768px)_and_(pointer:fine)]:group-hover:opacity-100">
                 {item.text}
               </p>
 
