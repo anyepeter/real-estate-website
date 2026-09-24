@@ -15,8 +15,19 @@ export type ListingFull = Omit<Listing, "area" | "agent" | "permit" | "photos"> 
   photos: Media[];
 };
 
+/**
+ * Commercial is a group of property types rather than one, and the split is
+ * load-bearing: /commercial is a whole branch of the site both competitors
+ * treat as an afterthought, so it needs to be expressible as a filter
+ * rather than a list of types repeated at every call site.
+ */
+export const COMMERCIAL_TYPES = ["office", "retail", "warehouse"] as const;
+
+export type ListingCategory = "residential" | "commercial";
+
 export type ListingFilters = {
   intent?: Listing["intent"];
+  category?: ListingCategory;
   propertyType?: Listing["propertyType"];
   bedrooms?: number;
   /** Matches the area itself or anything beneath it in the tree. */

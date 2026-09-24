@@ -1,7 +1,9 @@
 import { listings, areas } from "./fixtures";
+import { COMMERCIAL_TYPES } from "./types";
 import type { Area, ListingFull, ListingFilters, Paginated } from "./types";
 
-export type { Area, ListingFull, ListingFilters, Paginated } from "./types";
+export type { Area, ListingFull, ListingFilters, Paginated, ListingCategory } from "./types";
+export { COMMERCIAL_TYPES } from "./types";
 
 /**
  * ───────────────────────────────────────────────────────────────────────────
@@ -46,13 +48,18 @@ export async function getListings(
   filters: ListingFilters = {}
 ): Promise<Paginated<ListingFull>> {
   const {
-    intent, propertyType, bedrooms, areaSlug, minPrice, maxPrice, furnished,
+    intent, category, propertyType, bedrooms, areaSlug, minPrice, maxPrice, furnished,
     sort = "newest", page = 1, limit = DEFAULT_LIMIT,
   } = filters;
 
   let rows = listings.filter(isVisible);
 
   if (intent) rows = rows.filter((l) => l.intent === intent);
+  if (category) {
+    const isCommercial = (l: ListingFull) =>
+      (COMMERCIAL_TYPES as readonly string[]).includes(l.propertyType);
+    rows = rows.filter((l) => (category === "commercial" ? isCommercial(l) : !isCommercial(l)));
+  }
   if (propertyType) rows = rows.filter((l) => l.propertyType === propertyType);
   if (bedrooms !== undefined) rows = rows.filter((l) => l.bedrooms === bedrooms);
   if (areaSlug) rows = rows.filter((l) => inArea(l, areaSlug));
