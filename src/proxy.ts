@@ -12,8 +12,11 @@ import { locales, defaultLocale } from "@/lib/i18n";
  * 307, not 308: the default locale is a product decision that may later
  * become "detect from Accept-Language", and a permanent redirect is cached
  * by browsers in a way that makes changing your mind expensive.
+ *
+ * Named `proxy`, in proxy.ts, because Next 16 deprecated the `middleware`
+ * convention and renamed it. Same behaviour, different file and export.
  */
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const hasLocale = locales.some(
