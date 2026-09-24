@@ -20,6 +20,12 @@ export default function Arrows() {
 
     const ctx = gsap.context(() => {
       const items = el.querySelectorAll("[data-arrow]");
+      // ScrollTrigger.init calls refresh(), which reads .end off the
+      // animation's first target. Handed a tween with no targets it throws
+      // "Cannot read properties of undefined (reading 'end')" and takes the
+      // rest of the page's JS down with it.
+      if (!items.length) return;
+
       gsap.set(items, { opacity: 0, xPercent: 12 });
       ScrollTrigger.create({
         trigger: el,

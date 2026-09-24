@@ -71,18 +71,36 @@ export default function Hero({ lang }: { lang: Locale }) {
   // Entrance: headline rises out of its mask, supporting copy follows.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // run() is deferred until fonts resolve, which can be long after this
+    // effect is cleaned up. Without the flag the pending promise still
+    // fires, against a DOM that no longer exists — which is what produced
+    // "GSAP target [data-hero-fade] not found".
+    let cancelled = false;
+
     const run = () => {
-      if (!title.current) return;
+      if (cancelled || !title.current || !root.current) return;
       title.current.classList.add("is-ready");
       revealWords(title.current, { duration: 2, delay: 0.15 });
+
+      // Scoped to this section rather than the document. A global selector
+      // here can match a previous mount's nodes, or none at all.
+      const fades = root.current.querySelectorAll("[data-hero-fade]");
+      if (!fades.length) return;
+
       gsap.fromTo(
-        "[data-hero-fade]",
+        fades,
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 1.6, stagger: 0.12, delay: 0.45, ease: "expo.out" }
       );
     };
+
     if (document.fonts?.status === "loaded") run();
     else document.fonts?.ready.then(run).catch(run);
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
