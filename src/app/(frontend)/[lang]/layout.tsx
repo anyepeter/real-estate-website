@@ -7,7 +7,9 @@ import LoadingLine from "@/components/layout/LoadingLine";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { brand } from "@/lib/brand";
-import { locales, isLocale, dir, type Locale } from "@/lib/i18n";
+import { locales, isLocale, dir, href, defaultLocale, type Locale } from "@/lib/i18n";
+import { routes } from "@/lib/routes";
+import { siteUrl, abs } from "@/lib/site";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -24,6 +26,13 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
+  /**
+   * metadataBase makes every relative URL in child metadata resolve to an
+   * absolute one. Without it Next emits relative OG images and canonicals,
+   * which render fine locally and silently do nothing in production.
+   */
+  metadataBase: new URL(siteUrl),
+
   // `template` is here so each route only supplies its own title. The
   // absolute default keeps the homepage from reading "X | X".
   title: {
@@ -32,6 +41,25 @@ export const metadata: Metadata = {
   },
   description:
     "Licensed Dubai brokerage for sales and leasing across residential, commercial and workspace. Verified listings, current prices, DLD-permitted.",
+
+  openGraph: {
+    siteName: brand.fullName,
+    locale: "en_AE",
+    alternateLocale: "ar_AE",
+    type: "website",
+  },
+
+  // Default alternates for the homepage. Routes that need their own —
+  // property pages already do — override this.
+  alternates: {
+    canonical: abs(href(defaultLocale, routes.home)),
+    languages: {
+      ...(Object.fromEntries(
+        locales.map((l) => [l, abs(href(l, routes.home))])
+      ) as Record<string, string>),
+      "x-default": abs(href(defaultLocale, routes.home)),
+    },
+  },
 };
 
 /** Both locales are known at build time, so every page under them can be

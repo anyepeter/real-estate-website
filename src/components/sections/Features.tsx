@@ -53,7 +53,7 @@ export default function Features({ lang }: { lang: Locale }) {
                   src={item.image}
                   alt=""
                   fill
-                  sizes="(max-width: 768px) 33rem, 33vw"
+                  sizes="(max-width: 768px) 88vw, 33vw"
                   className="scale-[1.01] object-cover"
                 />
               </div>

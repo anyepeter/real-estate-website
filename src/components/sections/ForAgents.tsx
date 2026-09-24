@@ -24,7 +24,7 @@ export default function ForAgents({ lang }: { lang: Locale }) {
                   src="/images/agents-small.jpg"
                   alt="Agent outside a Dubai residential tower"
                   fill
-                  sizes="36rem"
+                  sizes="(max-width: 768px) 96vw, (max-width: 1920px) 19vw, 360px"
                   className="object-cover"
                 />
               </div>
@@ -48,7 +48,7 @@ export default function ForAgents({ lang }: { lang: Locale }) {
                   src="/images/agents-large.jpg"
                   alt="Aerial view of a tree-lined neighborhood"
                   fill
-                  sizes="(max-width: 768px) 100vw, 97.6rem"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1920px) 51vw, 976px"
                   className="object-cover"
                 />
               </div>

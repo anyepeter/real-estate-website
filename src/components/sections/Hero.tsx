@@ -145,13 +145,13 @@ export default function Hero({ lang }: { lang: Locale }) {
               data-hero-cloud
               className="absolute left-[-57.2rem] top-[33.7rem] h-[29.8rem] w-[70.2rem] md:left-[-33.72rem] md:top-[25%] md:h-[47.7rem] md:w-[112.4rem]"
             >
-              <Image src="/images/cloud.png" alt="" fill sizes="112rem" className="object-cover" />
+              <Image src="/images/cloud.png" alt="" fill sizes="(max-width: 768px) 100vw, (max-width: 1920px) 59vw, 1120px" className="object-cover" />
             </div>
             <div
               data-hero-cloud
               className="absolute right-[-41.2rem] top-[37.12rem] h-[23.6rem] w-[55.7rem] md:right-[-33.72rem] md:top-[20%] md:h-[39.7rem] md:w-[93.6rem]"
             >
-              <Image src="/images/cloud.png" alt="" fill sizes="94rem" className="object-cover" />
+              <Image src="/images/cloud.png" alt="" fill sizes="(max-width: 768px) 100vw, (max-width: 1920px) 49vw, 940px" className="object-cover" />
             </div>
           </div>
 

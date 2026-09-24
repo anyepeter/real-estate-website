@@ -59,7 +59,7 @@ export default function Arrows() {
               data-arrow
               className="relative -ml-[1.8rem] h-[11.8rem] w-[9.3rem] shrink-0 [mask-image:url(/arrow-mask.svg)] [mask-repeat:no-repeat] [mask-size:100%_100%] md:-ml-[6.7rem] md:h-[44rem] md:w-[34.6rem]"
             >
-              <Image src={img.src} alt={img.alt} fill sizes="35rem" className="object-cover" />
+              <Image src={img.src} alt={img.alt} fill sizes="(max-width: 768px) 94vw, (max-width: 1920px) 19vw, 350px" className="object-cover" />
             </div>
           ))}
         </div>

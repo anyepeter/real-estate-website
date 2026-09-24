@@ -48,7 +48,7 @@ export default function LatestPosts({ lang }: { lang: Locale }) {
                       src={post.image}
                       alt=""
                       fill
-                      sizes="(max-width: 768px) 100vw, 97.6rem"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1920px) 51vw, 976px"
                       className="object-cover"
                     />
                   </Link>
