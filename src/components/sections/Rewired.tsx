@@ -1,8 +1,9 @@
 import { RevealWords, FadeUp } from "@/components/Reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { rewired } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
 
-export default function Rewired() {
+export default function Rewired({ lang }: { lang: Locale }) {
   return (
     <section className="py-[4rem] md:py-[15rem]">
       <div className="container">
@@ -18,7 +19,7 @@ export default function Rewired() {
                 <span className="em block">{rewired.titleRest}</span>
               </RevealWords>
               <FadeUp>
-                <ButtonLink href={rewired.cta.href}>{rewired.cta.label}</ButtonLink>
+                <ButtonLink href={href(lang, rewired.cta.href)}>{rewired.cta.label}</ButtonLink>
               </FadeUp>
             </div>
           </div>

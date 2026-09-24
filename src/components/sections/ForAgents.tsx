@@ -2,8 +2,9 @@ import Image from "next/image";
 import { RevealWords, ClipIn, FadeUp } from "@/components/Reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { forAgents } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
 
-export default function ForAgents() {
+export default function ForAgents({ lang }: { lang: Locale }) {
   return (
     <section className="py-[6rem] md:py-[15rem]">
       <div className="container">
@@ -62,7 +63,7 @@ export default function ForAgents() {
               </RevealWords>
 
               <FadeUp className="mt-[3rem] flex flex-col gap-[1rem] md:mt-[4rem] md:flex-row md:gap-[1.2rem]">
-                <ButtonLink href={forAgents.cta.href}>{forAgents.cta.label}</ButtonLink>
+                <ButtonLink href={href(lang, forAgents.cta.href)}>{forAgents.cta.label}</ButtonLink>
               </FadeUp>
             </div>
           </div>

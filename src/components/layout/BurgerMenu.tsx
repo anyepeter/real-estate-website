@@ -5,12 +5,22 @@ import { useEffect, useRef } from "react";
 import { gsap, MENU_EASE, revealWords, fadeUp } from "@/lib/animations";
 import { ButtonLink } from "@/components/ui/button";
 import { nav } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
+import { routes } from "@/lib/routes";
 
 /**
  * Mobile overlay. The backdrop unrolls vertically on the house ease,
  * then the links rise out of their masks behind it.
  */
-export default function BurgerMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function BurgerMenu({
+  open,
+  onClose,
+  lang,
+}: {
+  open: boolean;
+  onClose: () => void;
+  lang: Locale;
+}) {
   const root = useRef<HTMLDivElement>(null);
   const backdrop = useRef<HTMLDivElement>(null);
   const built = useRef(false);
@@ -82,7 +92,7 @@ export default function BurgerMenu({ open, onClose }: { open: boolean; onClose: 
           {nav.map((item) => (
             <Link
               key={item.label}
-              href={item.href}
+              href={href(lang, item.href)}
               onClick={onClose}
               data-menu-item
               className="text-[4rem] font-medium leading-[1.1] tracking-[-0.02em]"
@@ -92,8 +102,8 @@ export default function BurgerMenu({ open, onClose }: { open: boolean; onClose: 
           ))}
         </nav>
         <div data-menu-action className="mt-[4rem]">
-          <ButtonLink href="/sign-in" icon={false} onClick={onClose}>
-            Sign In
+          <ButtonLink href={href(lang, routes.contact)} icon={false} onClick={onClose}>
+            Contact
           </ButtonLink>
         </div>
       </div>

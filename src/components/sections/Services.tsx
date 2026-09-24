@@ -6,13 +6,14 @@ import { RevealWords, FadeUp } from "@/components/Reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { ArrowRight } from "@/components/ui/icons";
 import { services } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
 
 /**
  * Three full-bleed rows on near-black. Hovering a row wipes its photo up
  * from the baseline while the still underneath drifts back to rest over
  * four seconds — slow enough to read as depth rather than motion.
  */
-export default function Services() {
+export default function Services({ lang }: { lang: Locale }) {
   return (
     <section className="bg-[#151717] py-[6rem] text-white md:py-[15rem]">
       <div className="container">
@@ -37,7 +38,7 @@ export default function Services() {
         {services.items.map((item, i) => (
           <Link
             key={item.name}
-            href={item.href}
+            href={href(lang, item.href)}
             className="group relative block h-[40rem] w-full overflow-hidden border-t border-[#383a3a]"
            prefetch={false}>
             {/* still photo, revealed on hover */}
@@ -82,7 +83,7 @@ export default function Services() {
           {services.briefLead} <span className="em">{services.briefRest}</span>
         </RevealWords>
         <FadeUp className="mt-[4rem]">
-          <ButtonLink href={services.cta.href} variant="secondary" inversed>
+          <ButtonLink href={href(lang, services.cta.href)} variant="secondary" inversed>
             {services.cta.label}
           </ButtonLink>
         </FadeUp>

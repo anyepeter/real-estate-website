@@ -10,8 +10,10 @@ import RollingText from "./RollingText";
 import BurgerMenu from "./BurgerMenu";
 import { nav } from "@/lib/content";
 import { brand } from "@/lib/brand";
+import { href, type Locale } from "@/lib/i18n";
+import { routes } from "@/lib/routes";
 
-export default function Header() {
+export default function Header({ lang }: { lang: Locale }) {
   const [solid, setSolid] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
@@ -42,18 +44,18 @@ export default function Header() {
       >
         <div className="container">
           <div className="relative z-50 grid min-h-[8.4rem] grid-cols-[1fr_auto] items-center text-[#151717] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem] md:py-[1rem]">
-            <Link href="/" aria-label={`${brand.fullName} — home`} className="flex items-center" prefetch={false}>
+            <Link href={href(lang, routes.home)} aria-label={`${brand.fullName} — home`} className="flex items-center" prefetch={false}>
               <LogoMark className="h-[2.6rem] w-[9.1rem]" />
             </Link>
 
             <nav className="hidden items-center justify-center gap-[3.2rem] md:flex">
               {nav.map((item) =>
                 item.items ? (
-                  <Dropdown key={item.label} item={item} />
+                  <Dropdown key={item.label} item={item} lang={lang} />
                 ) : (
                   <Link
                     key={item.label}
-                    href={item.href}
+                    href={href(lang, item.href)}
                     className="flex items-center gap-[1rem] overflow-hidden text-[1.8rem] font-medium leading-[1.25] md:text-[2rem]"
                    prefetch={false}>
                     <RollingText>{item.label}</RollingText>
@@ -62,9 +64,16 @@ export default function Header() {
               )}
             </nav>
 
+            {/* The clone shipped a "Sign In" agent portal here. A brokerage
+                site has no accounts to sign into — the real CTA is talking
+                to someone. */}
             <div className="hidden items-center justify-end md:flex">
-              <ButtonLink href="/sign-in" icon={false} className="!px-[2.4rem] !py-[1.1rem]">
-                Sign In
+              <ButtonLink
+                href={href(lang, routes.contact)}
+                icon={false}
+                className="!px-[2.4rem] !py-[1.1rem]"
+              >
+                Contact
               </ButtonLink>
             </div>
 
@@ -94,12 +103,12 @@ export default function Header() {
         </div>
       </header>
 
-      <BurgerMenu open={open} onClose={() => setOpen(false)} />
+      <BurgerMenu open={open} onClose={() => setOpen(false)} lang={lang} />
     </>
   );
 }
 
-function Dropdown({ item }: { item: (typeof nav)[number] }) {
+function Dropdown({ item, lang }: { item: (typeof nav)[number]; lang: Locale }) {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -128,7 +137,7 @@ function Dropdown({ item }: { item: (typeof nav)[number] }) {
           {item.items?.map((sub) => (
             <Link
               key={sub}
-              href={item.href}
+              href={href(lang, item.href)}
               className="flex items-center gap-[1rem] px-[3rem] py-[1.35rem] text-[1.8rem] font-medium leading-[1.5] transition-colors hover:bg-[#ededed]"
              prefetch={false}>
               {sub}

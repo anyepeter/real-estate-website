@@ -6,8 +6,9 @@ import { RevealWords, FadeUp } from "@/components/Reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { parallaxOnScroll } from "@/lib/animations";
 import { outro } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
 
-export default function Outro() {
+export default function Outro({ lang }: { lang: Locale }) {
   const bg = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function Outro() {
           {outro.lead} <span className="em">{outro.rest}</span>
         </RevealWords>
         <FadeUp className="mt-[3rem] text-center md:mt-[4rem]">
-          <ButtonLink href={outro.cta.href} variant="primary" inversed>
+          <ButtonLink href={href(lang, outro.cta.href)} variant="primary" inversed>
             {outro.cta.label}
           </ButtonLink>
         </FadeUp>

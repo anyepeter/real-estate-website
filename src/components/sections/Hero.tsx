@@ -6,6 +6,7 @@ import { gsap, ScrollTrigger, revealWords } from "@/lib/animations";
 import { ButtonLink } from "@/components/ui/button";
 import { LogoType } from "@/components/Logo";
 import { hero } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
 
 /**
  * A 500vh scroll stage with a sticky 100vh viewport.
@@ -17,7 +18,7 @@ import { hero } from "@/lib/content";
  * stays behind, filled with the façade. A stroked copy of the same
  * artwork bridges the handoff.
  */
-export default function Hero() {
+export default function Hero({ lang }: { lang: Locale }) {
   const root = useRef<HTMLElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
@@ -178,7 +179,7 @@ export default function Hero() {
               {hero.lead} <span className="text-[rgba(21,23,23,0.5)]">{hero.rest}</span>
             </p>
             <div data-hero-fade className="mt-[3rem] flex justify-center md:mt-[4rem]">
-              <ButtonLink href={hero.cta.href}>{hero.cta.label}</ButtonLink>
+              <ButtonLink href={href(lang, hero.cta.href)}>{hero.cta.label}</ButtonLink>
             </div>
           </div>
         </div>

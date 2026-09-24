@@ -7,8 +7,10 @@ import { ArrowRight } from "@/components/ui/icons";
 import RollingText from "./RollingText";
 import { footer } from "@/lib/content";
 import { brand, regulatoryLine } from "@/lib/brand";
+import { href, type Locale } from "@/lib/i18n";
+import { routes } from "@/lib/routes";
 
-export default function Footer() {
+export default function Footer({ lang }: { lang: Locale }) {
   const [email, setEmail] = useState("");
 
   return (
@@ -77,7 +79,7 @@ export default function Footer() {
               {footer.nav.map((l) => (
                 <Link
                   key={l.label}
-                  href={l.href}
+                  href={href(lang, l.href)}
                   className="overflow-hidden text-[3rem] font-medium leading-[1.1] tracking-[-0.01em] md:text-[3.2rem]"
                  prefetch={false}>
                   <RollingText>{l.label}</RollingText>
@@ -109,7 +111,10 @@ export default function Footer() {
             <ul className="flex flex-wrap gap-x-[4rem] gap-y-[1.5rem] text-[1.4rem] font-medium leading-[1.4] md:text-[1.6rem]">
               {footer.sublinks.map((s) => (
                 <li key={s}>
-                  <Link href="/" className="hover:underline" prefetch={false}>
+                  {/* These pages don't exist yet — Terms, Privacy and the
+                      RERA notice are Phase 2. Pointing them home is honest
+                      until then; a dead link is not. */}
+                  <Link href={href(lang, routes.home)} className="hover:underline" prefetch={false}>
                     {s}
                   </Link>
                 </li>

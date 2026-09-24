@@ -4,13 +4,14 @@ import { RevealWords, FadeUp, ClipIn } from "@/components/Reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { ArrowRight } from "@/components/ui/icons";
 import { features } from "@/lib/content";
+import { href, type Locale } from "@/lib/i18n";
 
 /**
  * Three cards on near-black. On a fine pointer the grid itself animates:
  * the hovered column grows to 1.2fr and its description fades up, so the
  * row rebalances instead of the card popping.
  */
-export default function Features() {
+export default function Features({ lang }: { lang: Locale }) {
   return (
     <section className="bg-[#151717] py-[4rem_6rem] pb-[6rem] pt-[4rem] text-white md:py-[15rem]">
       <div className="container">
@@ -30,7 +31,7 @@ export default function Features() {
               {features.lead} <span className="em">{features.rest}</span>
             </RevealWords>
             <FadeUp className="mt-[3rem] md:mt-[4rem]">
-              <ButtonLink href={features.cta.href} variant="primary" inversed>
+              <ButtonLink href={href(lang, features.cta.href)} variant="primary" inversed>
                 {features.cta.label}
               </ButtonLink>
             </FadeUp>
@@ -66,7 +67,7 @@ export default function Features() {
 
               <div className="relative self-end">
                 <Link
-                  href={item.href}
+                  href={href(lang, item.href)}
                   className="inline-flex items-center gap-[1.4rem] rounded-[100px] border border-[hsla(0,0%,100%,0.5)] px-[2.4rem] py-[1.4rem] text-[1.6rem] font-medium transition-transform duration-300 hover:[transition:transform_.7s_cubic-bezier(.34,3.56,.64,1)] hover:scale-x-[1.02] md:px-[3rem] md:py-[1.54rem] md:text-[1.8rem]"
                  prefetch={false}>
                   Learn More
