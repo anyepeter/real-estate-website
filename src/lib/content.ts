@@ -26,6 +26,9 @@ export const nav = [
   { label: "Buy", href: "/buy" },
   { label: "Rent", href: "/rent" },
   { label: "Sell", href: "/sell" },
+  // Reachable, but deliberately not the primary path: /buy and /rent are
+  // the indexable pages we want people landing on and linking to.
+  { label: "Search", href: "/search" },
   {
     label: "Commercial",
     href: "/commercial",
