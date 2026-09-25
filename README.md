@@ -1,88 +1,107 @@
-# FIND Real Estate — landing page
+# Dubai Real Estate Platform
 
-A clone of the `findrealestate.com` landing page, rebuilt on Next.js + Tailwind + GSAP.
+A bilingual (EN/AR) brokerage site for a licensed Dubai agency — buy, rent and sell across
+residential, commercial and workspace — with a Payload CMS admin behind it.
+
+> **Brand is a placeholder.** The site ships as "ACME" pending a trade-name decision with DET.
+> Changing it is one file: [`src/lib/brand.ts`](src/lib/brand.ts).
+>
+> **The wordmark is not ours.** `public/logotype.svg` and the SVG paths in
+> [`src/components/Logo.tsx`](src/components/Logo.tsx) still spell FIND and came from the
+> reference site this was built on. **Replace before any public deploy.**
 
 ## Stack
 
 | | |
 |---|---|
-| Framework | Next.js 15 (App Router) + React 19 + TypeScript |
-| Styling | Tailwind CSS v4 |
-| Components | shadcn-style primitives (CVA + Radix conventions) |
-| Animation | GSAP 3 — ScrollTrigger, SplitText, CustomEase |
-| Smooth scroll | Lenis, driven off the GSAP ticker |
-| Carousel | Swiper |
+| Framework | Next.js 16 (App Router, Turbopack) · React 19 · TypeScript |
+| Styling | Tailwind CSS v4 · shadcn primitives |
+| Animation | GSAP 3 (ScrollTrigger, SplitText) · Lenis — marketing pages only |
+| CMS / admin | Payload 3, mounted at `/admin` in the same app |
+| Database | PostgreSQL + PostGIS (Neon) |
+| Media | Payload uploads → AVIF at four widths |
+
+## Getting started
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
-npm run build
+cp .env.example .env.local     # then fill it in — see below
+npm run dev                    # http://localhost:3000
 ```
 
-## The sizing system
+### The site runs without a database
 
-The whole design is authored in `rem` against a **fluid root font-size**, which is how
-the original scales every dimension — type, spacing, image boxes — from one set of numbers:
+`lib/data` falls back to fixtures when `DATABASE_URI` is unset, and warns loudly on boot. The
+public pages work; nothing you see is real inventory. `/admin` does **not** work without a
+database.
 
-```css
-html { font-size: 2.6666666667vw }                    /* 10px @ 375px  */
-@media (min-width: 768px)  { html { font-size: .5208333333vw } }  /* 10px @ 1920px */
-@media (min-width: 1920px) { html { font-size: 10px } }           /* frozen        */
+### Connecting the database
+
+1. Create a free project at [neon.tech](https://neon.tech)
+2. In its SQL editor: `CREATE EXTENSION IF NOT EXISTS postgis;`
+3. Copy the **pooled** connection string into `.env.local`:
+
+```
+DATABASE_URI=postgresql://…pooled…
+PAYLOAD_SECRET=…            # node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+CRON_SECRET=…               # any long random string
 ```
 
-So `7.2rem` is 72px on a 1920px screen and shrinks proportionally below that. There are only
-two breakpoints in the entire page. Verified against the original: both report a computed
-root of `8.33333px` at a 1600px viewport.
+4. Then:
 
-## The hero
+```bash
+npm run migrate      # create the tables
+npm run seed         # ~60 Dubai areas, idempotent
+npm run dev
+```
 
-A 500vh scroll stage with a sticky 100vh viewport, driven by one scrubbed timeline.
-The camera appears to descend the building while the FIND wordmark assembles out of it:
+### Creating the first admin user
 
-| Layer | Animation | Ease |
-|---|---|---|
-| house (two copies) | `scale 1 → 1.3`, `y 0 → -40%` | `power2.out` |
-| clouds | `x 0 → ∓15%` of own width | `power2.out` |
-| fog | `y 70% → 0%` | `power2.out` |
-| copy | `opacity 1 → 0` (0–20%), `scale 1 → 0.9` | `power2.out` |
-| stroked logotype | fade in 5–15%, out 25–45% | — |
-| masked composite | `opacity 0 → 1` at 30–40% | `power2.out` |
+Visit **http://localhost:3000/admin**. On a fresh database Payload shows a *create first user*
+form — you set the email and password there. There is no seeded account and no default
+password by design.
 
-The trick is the **cross-fade at 30–40%**: there are two copies of the building, and the
-second lives inside a layer masked to the logotype (`/logotype.svg`). As the real building
-dissolves, the masked twin arrives — so all that remains of the façade is the wordmark
-filled with it.
+## Scripts
 
-These curves were measured off the live original by sampling computed styles at 21 scroll
-positions, not guessed.
+| | |
+|---|---|
+| `npm run dev` / `build` / `start` | Next.js |
+| `npm run migrate` · `migrate:create` | Payload schema migrations |
+| `npm run seed` | Seed the Dubai area tree (safe to re-run) |
+| `npm run generate:types` | Regenerate `payload-types.ts` after a collection change |
+| `npm run generate:importmap` | Regenerate Payload's import map after adding an admin component |
+| `npm run ui:fix` | Correct the `cn` import shadcn emits — run after every `shadcn add` |
 
-## Animation primitives
+## Architecture worth knowing
 
-`src/lib/animations.ts` ports the original's reusable set — same durations, staggers and eases:
+**Two route groups, two root layouts.** `(frontend)` renders the public site under `[lang]`;
+`(payload)` renders the admin. Payload emits its own `<html>`, so they cannot share a parent.
 
-- `revealWords` — masked word rise (`y 115% → 0`, 2s, `power4.out`, stagger `{amount: .4}` over 5 words)
-- `clipReveal` — `inset(0 100% 0 0) → inset(0 0% 0 0)` wipe, 2s, `power3.out`
-- `fadeUp` / `fadeX` — 70px travel, 2s, `expo.out`
-- `lineWipe` — per-line cover retracting right, `power3.out`
-- `parallax` — `10% → -10%` scrubbed at 1.5
-- `fade`, `counter`
+**`lib/data` is the only module that knows where listings come from.** Pages never import
+fixtures or Payload directly. Swapping implementations is a switch in one file.
 
-`src/components/Reveal.tsx` wraps these as declarative components that split only after
-`document.fonts.ready` (splitting against a fallback face breaks the line boxes) and respect
-`prefers-reduced-motion`.
+**A listing cannot publish without a valid advertising permit.** Enforced in a `beforeChange`
+hook on the collection, not in admin validation — so the feed importer, any API route and seed
+scripts all hit the same gate. Checked again at read time, because the nightly sweep runs once
+a day and a permit can lapse at any hour in between.
 
-## Assets
+**Query strings are never indexed.** `/buy` is canonical and indexable; `/buy?beds=2` is
+`noindex,follow` canonicalised back to it; `/search` is permanently noindex and
+robots-disallowed. Faceted navigation is the crawl-budget trap this architecture exists to
+avoid.
 
-All imagery, the video, and the logotype are the originals, pulled from the live site.
-`house.png` was 26MB; re-encoded to WebP at 3.9MB with alpha intact.
+**Marketing pages carry the motion; listing pages do not.** GSAP ships globally via
+`SmoothScroll`, but the pages that have to rank and convert are Server Components with no
+client JavaScript of their own — including both lead forms, which work with scripting
+disabled.
 
-**One substitution:** the three blog thumbnails are lazy-loaded from a CMS on the original and
-have no `src` in the served HTML, so they were never fetchable. The feature photography stands
-in for them — swap `image` in `src/lib/content.ts` when real posts exist.
+## Compliance
 
-## Notes
+RERA requires the brokerage name and ORN on every advert. Those live in `lib/brand.ts` and
+render in the footer, on every listing card, and on the social card.
 
-- Copy lives in `src/lib/content.ts` as `lead`/`rest` pairs, which drive the two-tone
-  headline treatment (lead clause in ink, remainder in grey) used in every section.
-- Nav destinations are placeholders with `prefetch={false}`, since only the landing page
-  is in scope — remove that once the routes exist.
+`/cron/expiry` runs nightly (see `vercel.json`) and watches three clocks: advertising permits,
+broker cards, and the trade licence itself. All three of the current documents expire on the
+same day, so one missed renewal takes everything down at once. The endpoint fails closed
+without `CRON_SECRET`.

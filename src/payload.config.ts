@@ -11,6 +11,7 @@ import { Areas } from "./collections/Areas";
 import { Agents } from "./collections/Agents";
 import { Permits } from "./collections/Permits";
 import { Listings } from "./collections/Listings";
+import { Enquiries } from "./collections/Enquiries";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,9 +30,22 @@ export default buildConfig({
     meta: {
       titleSuffix: "— Admin",
     },
+    components: {
+      /**
+       * Replaces Payload's default landing view. The stock one lists
+       * collections, which answers "what is in this system" — a question
+       * the owner already knows the answer to. The custom view answers
+       * "what needs doing", which is why they logged in.
+       */
+      views: {
+        dashboard: {
+          Component: "@/components/admin/Dashboard#Dashboard",
+        },
+      },
+    },
   },
 
-  collections: [Listings, Permits, Areas, Agents, Media, Users],
+  collections: [Listings, Enquiries, Permits, Areas, Agents, Media, Users],
 
   editor: lexicalEditor(),
 

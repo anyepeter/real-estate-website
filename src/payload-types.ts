@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     listings: Listing;
+    enquiries: Enquiry;
     permits: Permit;
     areas: Area;
     agents: Agent;
@@ -81,6 +82,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     listings: ListingsSelect<false> | ListingsSelect<true>;
+    enquiries: EnquiriesSelect<false> | EnquiriesSelect<true>;
     permits: PermitsSelect<false> | PermitsSelect<true>;
     areas: AreasSelect<false> | AreasSelect<true>;
     agents: AgentsSelect<false> | AgentsSelect<true>;
@@ -332,6 +334,35 @@ export interface Media {
   };
 }
 /**
+ * Enquiries from the website. Newest first.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enquiries".
+ */
+export interface Enquiry {
+  id: number;
+  name: string;
+  kind: 'viewing' | 'valuation' | 'general';
+  email: string;
+  phone: string;
+  message?: string | null;
+  /**
+   * Set automatically when the enquiry came from a property page.
+   */
+  listing?: (number | null) | Listing;
+  status: 'new' | 'contacted' | 'booked' | 'closed';
+  /**
+   * Internal. Never shown to the enquirer.
+   */
+  notes?: string | null;
+  /**
+   * Page the form was on.
+   */
+  source?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -389,6 +420,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'listings';
         value: number | Listing;
+      } | null)
+    | ({
+        relationTo: 'enquiries';
+        value: number | Enquiry;
       } | null)
     | ({
         relationTo: 'permits';
@@ -478,6 +513,23 @@ export interface ListingsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enquiries_select".
+ */
+export interface EnquiriesSelect<T extends boolean = true> {
+  name?: T;
+  kind?: T;
+  email?: T;
+  phone?: T;
+  message?: T;
+  listing?: T;
+  status?: T;
+  notes?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
